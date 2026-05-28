@@ -10,21 +10,37 @@
  */
 class Solution {
     public ListNode removeNthFromEnd(ListNode head, int n) {
-        int size = 0;
+        ListNode dummy = new ListNode(0);
+        dummy.next = head;
+        ListNode p = dummy;
+
         ListNode temp = head;
+        int size = 0;
         while (temp != null) {
             size++;
             temp = temp.next;
         }
-        if(size == n) return head.next;
-        int k = size - n;
-        ListNode tem = head;
-        for (int i = 1; i < k; i++) {
-            tem = tem.next;
+
+        if (size == n) {
+            return head.next;
         }
-        // if (tem.next != null && tem != null) {
-            tem.next = tem.next.next;
-        // }
-        return head;
+        n = n % size;
+        if (n == 0) {
+            return head;
+        }
+
+        int k = size - n;
+        int i = 0;
+        while (i < k) {
+            p = p.next;
+            i++;
+        }
+        p.next = p.next.next;
+
+        return dummy.next;
     }
 }
+
+// Synced seamlessly with LeetHub Pro
+// Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4
+// Get it here: https://chromewebstore.google.com/detail/leethub-v4/bcilpkkbokcopmabingnndookdogmbna
