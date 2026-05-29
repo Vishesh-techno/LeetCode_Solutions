@@ -1,0 +1,59 @@
+class Solution {
+    public boolean isDigit(char c) {
+        return c >= '0' && c <= '9';
+    }
+
+    public int myAtoi(String s) {
+        int i = 0;
+        int num = 0;
+        int sign = 1;
+
+        // 1. remove leading spaces
+        while (i < s.length() && s.charAt(i) == ' ') {
+            i++;
+        }
+
+        // 2. handle sign
+        if (i < s.length() && s.charAt(i) == '-') {
+            sign = -1;
+            i++;
+        } else if (i < s.length() && s.charAt(i) == '+') {
+            i++;
+        }
+
+        // 3. conversion
+        while (i < s.length() && isDigit(s.charAt(i))) {
+            int digit = s.charAt(i) - '0';
+
+            if (num == Integer.MAX_VALUE / 10) {
+                if (sign == 1) {
+                    if (digit >= 7) {
+                        return Integer.MAX_VALUE;
+                    }
+                } else {
+                    if (sign == -1) {
+                        if (digit >= 8) {
+                            return Integer.MIN_VALUE;
+                        }
+                    }
+                }
+            }
+            if (num > Integer.MAX_VALUE / 10) {
+                if (sign == 1) {
+                    return Integer.MAX_VALUE;
+                } else {
+                    return Integer.MIN_VALUE;
+                }
+            }
+            num = num * 10 + digit;
+            i++;
+        }
+
+        return sign * num;
+    }
+}
+
+
+// Synced seamlessly with LeetHub Pro
+// Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4
+// Get it here: https://chromewebstore.google.com/detail/leethub-v4/bcilpkkbokcopmabingnndookdogmbna
